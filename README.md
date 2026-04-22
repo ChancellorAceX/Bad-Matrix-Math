@@ -64,7 +64,15 @@
   $$
 
   And this holds true for the entirety of this case. 
+# The Process
   
-  For our first step, we wanted to know if there were any other matrix couplings in which this would also hold true. We did so assuming only single digit inputs, we did then expand to include positive non-single digit inputs. The function in *badMatMathv1* finds the answer to that. The output of which can be seen in *1-20.txt*.
+### V1
+  For our first step, we wanted to know if there were any other matrix couplings in which this would also hold true. I did so assuming only single digit inputs, and then expanded to include positive non-single digit inputs. The function in *badMatMathv1* finds the answer to that. The output of which can be seen in *1-20 results.txt*.
 
+### V2  
   Though this worked, this was a hastily created, brute-force function that was not quick by any means. As such, I reduced its run time significantly by skipping when able (see *badMatMathv2*).
+
+### V3
+  After we had received this list of results (of which there were 211 matches between 1-20) we realized that this is way more common that we had realized. So we set out to see if we could find anything in common, or some way to pre-determine if the matrices followed this pattern. But first, we wanted to collect a little more data, and this time on 3x3 matrices. As you can see in *badMatMathv3* I expanded to handle 3x3 matrices with similar skipping and logging as in v2. I also had it export to a text file instead of holding on to the data for an output, which should help with larger number sets and their run time since less data will need to be managed at a time. It also delivers a immediately usable file for both data sharing and analysis.
+
+  I have hardcoded the output to push to the empty *test.txt* file here in the repo if you decide you want to try it. The results for 0-10 on 3x3 matrices are in the file *3x3 1-10 results.txt*.
