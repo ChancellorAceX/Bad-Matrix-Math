@@ -71,4 +71,49 @@ def badMatMathv1(start,finish):
     print(i[0], i[1], i[2])
   print(len(sol), count)
 
-badMatMathv1(0,20)
+def badMatMathv2(start,finish):
+  """
+    Prints a list of values that satisfy the problem's conditions to the console.
+    0 is ignored for simplicity.
+    This version should have a faster run time by skipping invalid combinations upon being assigned. Progress updates were also added for better transparency of the run.
+
+    Args:
+      start: beginning number
+      finish: finishing number
+
+    Returns:
+      null
+  """
+  testrange=range(start, finish+1)
+  testrange=list(filter(lambda l:l!=0, testrange))
+  sol=[]
+  count = 0
+  total = len(testrange)**8
+  for a in testrange:
+    for b in testrange:
+        for w in testrange:
+          for y in testrange:
+              Ca = int(str(a)+str(w))
+              if a*w+b*y!=Ca:
+                 count+=len(testrange)**4
+                 continue
+              for x in testrange:
+                for z in testrange:
+                    Cb = int(str(b)+str(x))
+                    if a*x+b*z!=Cb:
+                       count+=len(testrange)**2
+                       continue
+                    for c in testrange:
+                      for d in testrange:
+                          count+=1
+                          A=[a,b,c,d]
+                          B=[w,x,y,z]
+                          Cc=int(str(c)+str(y))
+                          Cd=int(str(d)+str(z))
+                          C=[Ca, Cb, Cc, Cd]
+                          if matmult(A,B)==C:
+                            sol.append([A,B,C])
+                            print(f"Progress: {100*count/total}% Complete")
+  for i in sol:
+    print(i[0], i[1], i[2])
+  print(len(sol), count)

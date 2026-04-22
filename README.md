@@ -65,6 +65,6 @@
 
   And this holds true for the entirety of this case. 
   
-  For our first step, we wanted to know if there were any other matrix couplings in which this would also hold true. The function in *madMatMathv1* finds the answer to that. The output of which can be seen in *1-20.txt*.
+  For our first step, we wanted to know if there were any other matrix couplings in which this would also hold true. We did so assuming only single digit inputs, we did then expand to include positive non-single digit inputs. The function in *badMatMathv1* finds the answer to that. The output of which can be seen in *1-20.txt*.
 
-  Though this worked, this was a hastily created, brute-force function that was not quick by any means. As such, I reduced its run time significantly by skipping when able.
+  Though this worked, this was a hastily created, brute-force function that was not quick by any means. As such, I reduced its run time significantly by skipping when able (see *badMatMathv2*).
