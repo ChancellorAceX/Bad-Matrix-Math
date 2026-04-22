@@ -36,7 +36,7 @@
   \end{bmatrix}
   $$
 
-  With this being said, there are some matrices in which appear that the multiplication is much more of a transposition than following the above methodology. For example:
+  With this being said, there are some matrices in which appear that the multiplication is much more of a translation than following the above methodology. For example:
 
   $$
   \begin{bmatrix}
@@ -76,3 +76,6 @@
   After we had received this list of results (of which there were 211 matches between 1-20) we realized that this is way more common that we had realized. So we set out to see if we could find anything in common, or some way to pre-determine if the matrices followed this pattern. But first, we wanted to collect a little more data, and this time on 3x3 matrices. As you can see in *badMatMathv3* I expanded to handle 3x3 matrices with similar skipping and logging as in v2. I also had it export to a text file instead of holding on to the data for an output, which should help with larger number sets and their run time since less data will need to be managed at a time. It also delivers a immediately usable file for both data sharing and analysis.
 
   I have hardcoded the output to push to the empty *test.txt* file here in the repo if you decide you want to try it. The results for 0-10 on 3x3 matrices are in the file *3x3 1-10 results.txt*.
+
+### Analysis
+  With that, the current step is to analyze the data and determine a rule as to why this occurs versus when it does not. The current idea is to look at eigenvalues of the matrices to see if there is anything to be learned from them.

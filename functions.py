@@ -1,4 +1,5 @@
 import numpy as np
+import sympy as sy
 import re
 def matmult(A,B):
    """
@@ -211,4 +212,41 @@ def badMatMathv3(start,finish):
                                                               file.write(f'#{rescount}: {resultstring}\n')
   print('run complete')
 
-badMatMathv3(0,10)
+def analysis(file):
+  array = open(file, 'r')
+  for i,l in enumerate(array):
+     values = re.findall("\d+",l)[1::]
+     arr1 = sy.Matrix([values[0:3],values[3:6],values[6:9]])
+     arr2 = sy.Matrix([values[9:12],values[12:15],values[15:18]])
+    #  eigvals1, eigvecs1 = np.linalg.eig(arr1)
+    #  eigvals2, eigvecs2 = np.linalg.eig(arr2)
+     if i==2810:
+        print('2810')
+        print(arr1)
+        for j in arr1.eigenvects():
+           print(j)
+        print()
+        print(arr2)
+        for j in arr2.eigenvects():
+           print(j)
+    # set = i.split('] [')
+  #   for j,k in enumerate(set):
+  #       m = [char for char in k if char not in "[] \n"]
+  #       m = "".join(m)
+  #       m=re.sub(r',',' ',m).split(' ')
+  #       set[j]=[int(val) for val in m]
+  #   newarray.append(set)
+  # newarray.pop()
+
+  # source = copy.deepcopy(newarray)
+
+  # for (j,sol) in enumerate(newarray):
+  #   for (i, arr) in enumerate(sol):
+  #       sol[i] = list(map(lambda x: 1 if x%2==1 else 0,arr))
+  #   #  print(f'{sol}\n{source[j]}\n')
+
+  # for i in newarray:
+  #   combined = matmult(i[0],i[1])
+  #   print(i[2],combined,i[2]==combined)
+
+analysis("./3x3 1-10 results.txt")
