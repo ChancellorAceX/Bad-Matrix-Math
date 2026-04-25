@@ -212,31 +212,34 @@ def badMatMathv3(start,finish):
                                                               file.write(f'#{rescount}: {resultstring}\n')
   print('run complete')
 
+
+import pandas as pd
 def analysis(file):
+  df = pd.DataFrame({'PairID':[42],'Matrix':[sy.Matrix([[1,2,3],[4,5,6],[7,8,9]])], 'EigenResult1':['one'], 'EigenResult2':['two'], 'EigenResult3':['three']})
   array = open(file, 'r')
   for i,l in enumerate(array):
-     values = re.findall("\d+",l)[1::]
-     arr1 = sy.Matrix([values[0:3],values[3:6],values[6:9]])
-     arr2 = sy.Matrix([values[9:12],values[12:15],values[15:18]])
-    #  eigvals1, eigvecs1 = np.linalg.eig(arr1)
-    #  eigvals2, eigvecs2 = np.linalg.eig(arr2)
-     if i==2810:
-        print('2810')
-        print(arr1)
+    if i>1:
+       continue
+    values = re.findall("\d+",l)[1::]
+    arr1 = sy.Matrix([values[0:3],values[3:6],values[6:9]])
+    arr2 = sy.Matrix([values[9:12],values[12:15],values[15:18]])
+    if i==1:
+        print(i)
+        sy.pprint(arr1)
+        temp=[i, arr1]
         for j in arr1.eigenvects():
-           print(j)
-        print()
-        print(arr2)
-        for j in arr2.eigenvects():
-           print(j)
-    # set = i.split('] [')
-  #   for j,k in enumerate(set):
-  #       m = [char for char in k if char not in "[] \n"]
-  #       m = "".join(m)
-  #       m=re.sub(r',',' ',m).split(' ')
-  #       set[j]=[int(val) for val in m]
-  #   newarray.append(set)
-  # newarray.pop()
+          temp.append(j)
+          sy.pprint(j)
+        
+        print(temp)
+        df = pd.concat([df, pd.DataFrame([temp])])
+
+        # print()
+        # sy.pprint(arr2)
+        # for j in arr2.eigenvects():
+        #   sy.pprint(j)
+        
+  df.to_csv('./3x3 file analysis.csv')
 
   # source = copy.deepcopy(newarray)
 
