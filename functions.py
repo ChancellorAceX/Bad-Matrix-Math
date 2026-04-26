@@ -212,44 +212,60 @@ def badMatMathv3(start,finish):
                                                               file.write(f'#{rescount}: {resultstring}\n')
   print('run complete')
 
+def getEVs(matrix):
+  """
+  Helper function for grabbing the eigenvalues and matrices for a given matrix.
+  Input is a sympy matrix, output is an array of eigenvalue, eigenvector pairs.
+  """
+  EVs = matrix.eigenvects()
+  for j, res in enumerate(EVs):
+    if res[1]==2:
+        EVs.append([res[0],res[2][1]])
+        EVs[j]= [res[0],res[2][0]]
+    elif res[1]==3:
+        for ind, k in enumerate(res[2]):
+          EVs[ind] = [res[0],k]
+    else:
+        EVs[j] = [res[0],res[2][0]] if len(res)==3 else EVs[j]
+  for i in EVs:
+    print(i[1][0], '\n')
+  EVs.sort(key = lambda x: x[1][0])
+  return EVs
+
 
 import pandas as pd
-def analysis(file):
-  df = pd.DataFrame({'PairID':[42],'Matrix':[sy.Matrix([[1,2,3],[4,5,6],[7,8,9]])], 'EigenResult1':['one'], 'EigenResult2':['two'], 'EigenResult3':['three']})
-  array = open(file, 'r')
-  for i,l in enumerate(array):
-    if i>1:
-       continue
-    values = re.findall("\d+",l)[1::]
-    arr1 = sy.Matrix([values[0:3],values[3:6],values[6:9]])
-    arr2 = sy.Matrix([values[9:12],values[12:15],values[15:18]])
-    if i==1:
-        print(i)
-        sy.pprint(arr1)
-        temp=[i, arr1]
-        for j in arr1.eigenvects():
-          temp.append(j)
-          sy.pprint(j)
-        
-        print(temp)
-        df = pd.concat([df, pd.DataFrame([temp])])
+def textToEigenCSV(file):
+  df = pd.DataFrame({'PairID':[None],'Matrix':[None], 'EigenResult1':[None], 'EigenResult2':[None], 'EigenResult3':[None]})
 
-        # print()
-        # sy.pprint(arr2)
-        # for j in arr2.eigenvects():
-        #   sy.pprint(j)
+  array = open(file, 'r')
+  length = len(open(file,'r').readlines())
+  for i,l in enumerate(array):
+    if i!=27:
+       continue
+    print(f'{i}: {100*i/length}% complete')
+    values = re.findall("\d+",l)[1::]
+
+    print('1')
+    arr1 = sy.Matrix([values[0:3],values[3:6],values[6:9]])
+    temp=[i, arr1]
+    EVs = getEVs(arr1)
+    for j in EVs:
+       temp.append(re.sub(r'\s|\n','',str(j)))
+    df.loc[len(df)] = temp
+
+    print('2')
+    arr2 = sy.Matrix([values[9:12],values[12:15],values[15:18]])
+    temp=[i, arr2]
+    EVs = getEVs(arr2)
+    for j in EVs:
+       temp.append(re.sub(r'\s|\n','',str(j)))
+    df.loc[len(df)] = temp
         
+  df = df.drop([0])
+  print(df.head())
   df.to_csv('./3x3 file analysis.csv')
 
-  # source = copy.deepcopy(newarray)
+textToEigenCSV("./3x3 1-10 results.txt")
 
-  # for (j,sol) in enumerate(newarray):
-  #   for (i, arr) in enumerate(sol):
-  #       sol[i] = list(map(lambda x: 1 if x%2==1 else 0,arr))
-  #   #  print(f'{sol}\n{source[j]}\n')
-
-  # for i in newarray:
-  #   combined = matmult(i[0],i[1])
-  #   print(i[2],combined,i[2]==combined)
-
-analysis("./3x3 1-10 results.txt")
+# df = pd.read_csv('./3x3 file analysis.csv', index_col=0, dtype=object)
+# print(df.head())

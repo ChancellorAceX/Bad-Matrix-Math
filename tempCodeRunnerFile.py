@@ -1,6 +1,5 @@
 
-        #    print(j)
-        # print()
-        # print(arr2)
-        # for j in arr2.eigenvects():
-        #    print(j)
+        # for j in range(0,2):
+        #   print(j)
+        #   temp.append(arr2.eigenvects()[j+2])
+        # df.loc[len(df)] = temp
