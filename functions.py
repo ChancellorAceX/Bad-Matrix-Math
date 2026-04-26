@@ -227,9 +227,8 @@ def getEVs(matrix):
           EVs[ind] = [res[0],k]
     else:
         EVs[j] = [res[0],res[2][0]] if len(res)==3 else EVs[j]
-  for i in EVs:
-    print(i[1][0], '\n')
-  EVs.sort(key = lambda x: x[1][0])
+  
+  EVs.sort(key = lambda x: x[1][0]) if all([x[1][0].is_real for x in EVs]) else EVs
   return EVs
 
 
@@ -240,7 +239,7 @@ def textToEigenCSV(file):
   array = open(file, 'r')
   length = len(open(file,'r').readlines())
   for i,l in enumerate(array):
-    if i!=27:
+    if i >27:
        continue
     print(f'{i}: {100*i/length}% complete')
     values = re.findall("\d+",l)[1::]
