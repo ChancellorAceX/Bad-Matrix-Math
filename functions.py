@@ -1,6 +1,8 @@
 import numpy as np
 import sympy as sy
 import re
+import pandas as pd
+import ast
 def matmult(A,B):
    """
     Basic hard-coded matrix multiplication designed only for 2x2 multiplication.
@@ -121,7 +123,6 @@ def badMatMathv2(start,finish):
     print(i[0], i[1], i[2])
   print(len(sol), count)
 
-
 filepath3x3 = "./test.txt"
 def badMatMathv3(start,finish):
   testrange=range(start, finish+1)
@@ -229,40 +230,47 @@ def getEVs(matrix):
         EVs[j] = [res[0],res[2][0]] if len(res)==3 else EVs[j]
   
   EVs.sort(key = lambda x: x[1][0]) if all([x[1][0].is_real for x in EVs]) else EVs
+  EVs = [[pair[0],pair[1].tolist()] for pair in EVs]
   return EVs
 
-
-import pandas as pd
 def textToEigenCSV(file):
   df = pd.DataFrame({'PairID':[None],'Matrix':[None], 'EigenResult1':[None], 'EigenResult2':[None], 'EigenResult3':[None]})
 
   array = open(file, 'r')
   length = len(open(file,'r').readlines())
   for i,l in enumerate(array):
-    # if i != 322:
+    # if i>100:
     #    continue
     print(f'{i}: {100*i/length}% complete')
     values = re.findall("\d+",l)[1::]
-
+    
     arr1 = sy.Matrix([values[0:3],values[3:6],values[6:9]])
-    temp=[i, arr1]
     EVs = getEVs(arr1)
+    temp=[i, arr1.tolist()]
     for j in EVs:
-       temp.append(re.sub(r'\s|\n','',str(j)))
+       temp.append(j)
     df.loc[len(df)] = temp
 
     arr2 = sy.Matrix([values[9:12],values[12:15],values[15:18]])
-    temp=[i, arr2]
     EVs = getEVs(arr2)
+    temp=[i, arr2.tolist()]
     for j in EVs:
-       temp.append(re.sub(r'\s|\n','',str(j)))
+       temp.append(j)
     df.loc[len(df)] = temp
         
   df = df.drop([0])
-  print(df.head())
+  print('To CSV')
   df.to_csv('./3x3 file analysis.csv')
+  return df
+# rawdf = textToEigenCSV("./3x3 1-10 results.txt")
+# print(rawdf.head())
+# print('complete')
 
-textToEigenCSV("./3x3 1-10 results.txt")
 
-# df = pd.read_csv('./3x3 file analysis.csv', index_col=0, dtype=object)
-# print(df.head())
+df = pd.read_csv('./3x3 file analysis.csv', index_col=0, converters={
+   'PairID': int, 
+   'Matrix': ast.literal_eval
+   })
+print(df.head())
+for x in df.loc[1]:
+   print(x, type(x))
