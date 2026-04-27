@@ -66,6 +66,7 @@
   And this holds true for the entirety of this case. 
 # The Process
   
+## Finding applicable matrices
 ### V1
   For our first step, we wanted to know if there were any other matrix couplings in which this would also hold true. I did so assuming only single digit inputs, and then expanded to include positive non-single digit inputs. The function in *badMatMathv1* finds the answer to that. The output of which can be seen in *1-20 results.txt*.
 
@@ -77,5 +78,8 @@
 
   I have hardcoded the output to push to the empty *test.txt* file here in the repo if you decide you want to try it. The results for 0-10 on 3x3 matrices are in the file *3x3 1-10 results.txt*.
 
-### Analysis
+## Analysis
   With that, the current step is to analyze the data and determine a rule as to why this occurs versus when it does not. The current idea is to look at eigenvalues of the matrices to see if there is anything to be learned from them.
+
+### textToEigenCSV / getEVs
+These two functions together allow us to put all the eigenvalues and eigenvectors for the previously found matrices into a pandas dataframe/CSV file for further analysis. A little bit of cleaning was required as naturally lots of extra space and needless extra lines are put in. However after filtering these, and unfortunately not sorting eigenvectors with imaginary components within them, we can now start to do some analysis on the attributes of the matrices. On first glance it appears as though each pairing has identical eigenvectors (even if the associated eigenvalues aren't the same). Next step of the analysis is to verify if this is the case.

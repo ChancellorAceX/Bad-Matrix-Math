@@ -220,8 +220,8 @@ def getEVs(matrix):
   EVs = matrix.eigenvects()
   for j, res in enumerate(EVs):
     if res[1]==2:
-        EVs.append([res[0],res[2][1]])
-        EVs[j]= [res[0],res[2][0]]
+      EVs.append([res[0],res[2][len(res[2])==2]])
+      EVs[j]= [res[0],res[2][0]]
     elif res[1]==3:
         for ind, k in enumerate(res[2]):
           EVs[ind] = [res[0],k]
@@ -239,12 +239,11 @@ def textToEigenCSV(file):
   array = open(file, 'r')
   length = len(open(file,'r').readlines())
   for i,l in enumerate(array):
-    if i >27:
-       continue
+    # if i != 322:
+    #    continue
     print(f'{i}: {100*i/length}% complete')
     values = re.findall("\d+",l)[1::]
 
-    print('1')
     arr1 = sy.Matrix([values[0:3],values[3:6],values[6:9]])
     temp=[i, arr1]
     EVs = getEVs(arr1)
@@ -252,7 +251,6 @@ def textToEigenCSV(file):
        temp.append(re.sub(r'\s|\n','',str(j)))
     df.loc[len(df)] = temp
 
-    print('2')
     arr2 = sy.Matrix([values[9:12],values[12:15],values[15:18]])
     temp=[i, arr2]
     EVs = getEVs(arr2)
