@@ -266,11 +266,11 @@ def textToEigenCSV(file):
 # print(rawdf.head())
 # print('complete')
 
-
 df = pd.read_csv('./3x3 file analysis.csv', index_col=0, converters={
    'PairID': int, 
-   'Matrix': ast.literal_eval
+   'Matrix': ast.literal_eval,
+   'EigenResult1': sy.sympify,
+   'EigenResult2': sy.sympify,
+   'EigenResult3': sy.sympify,
    })
 print(df.head())
-for x in df.loc[1]:
-   print(x, type(x))
