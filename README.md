@@ -84,5 +84,8 @@
 ### textToEigenCSV / getEVs
 These two functions together allow us to put all the eigenvalues and eigenvectors for the previously found matrices into a pandas dataframe/CSV file for further analysis (ie - *3x3 file analysis.csv*). A little bit of cleaning was required as naturally lots of extra space and needless extra lines are put in. However after filtering these, and unfortunately not sorting eigenvectors with imaginary components within them, we can now start to do some analysis on the attributes of the matrices. On first glance it appears as though each pairing has identical eigenvectors (even if the associated eigenvalues aren't the same). Next step of the analysis is to verify if this is the case.
 
-### CSV Fix:
+### CSV Fix
 Outputs were all in strings. Updates have been implemented to change output/CSV from strings to desired raw data formats to make transfer from CSV easier. Also ammended *textToEigenCSV* to ouptut the pandas dataframe for direct manipulation immediate use just in case.
+
+### Restructuring
+Restructured the dataframe to split the eigenvalues from their associated vectors. Column names still keeps them paired, however testing/manipulating the individual vectors will be easier now that they aren't tied with the eigenvalues.

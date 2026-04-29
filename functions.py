@@ -242,7 +242,7 @@ def textToEigenCSV(file):
     # if i>100:
     #    continue
     print(f'{i}: {100*i/length}% complete')
-    values = re.findall("\d+",l)[1::]
+    values = re.findall("\\d+",l)[1::]
     
     arr1 = sy.Matrix([values[0:3],values[3:6],values[6:9]])
     EVs = getEVs(arr1)
@@ -273,4 +273,29 @@ df = pd.read_csv('./3x3 file analysis.csv', index_col=0, converters={
    'EigenResult2': sy.sympify,
    'EigenResult3': sy.sympify,
    })
-print(df.head())
+
+
+def eigenSplit (dataframe, column):
+    EVal = [x[0] for x in dataframe[column].tolist()]
+    EVect = [x[1] for x in dataframe[column].tolist()]
+    return [EVal, EVect]
+
+def restructure (dataframe):
+  df = dataframe
+  [EVal1, EVect1] = eigenSplit(dataframe,'EigenResult1')
+  [EVal2, EVect2] = eigenSplit(dataframe,'EigenResult2')
+  [EVal3, EVect3] = eigenSplit(dataframe,'EigenResult3')
+
+  df.loc[:,'Eigenvalue1'] = EVal1
+  df.loc[:,'Eigenvector1'] = EVect1
+  df.loc[:,'Eigenvalue2'] = EVal2
+  df.loc[:,'Eigenvector2'] = EVect2
+  df.loc[:,'Eigenvalue3'] = EVal3
+  df.loc[:,'Eigenvector3'] = EVect3
+
+  df.drop(columns = ['EigenResult1','EigenResult2','EigenResult3'], inplace=True)
+  return df  
+
+df2 = restructure(df)   
+
+
