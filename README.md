@@ -94,3 +94,5 @@ Restructured the dataframe to split the eigenvalues from their associated vector
 Started using the Jupyter notebook for piecewise steps/manipulation.
 
 Data has now been filtered to remove imaginary eigenvectors. This is only because they will have to be compared in a different way since imaginary values aren't interpretted with the same methods as real values. That being said, imaginary values have been filtered out and will now be used to do the first step of data comparison/analysis.
+
+After separating out the imaginary valued eigenvectors, It seems that pairings don't necessarily have equivalent eigenvectors. That being said, that doesn't necessarily mean that this is a dead end.
